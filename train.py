@@ -35,7 +35,7 @@ def train_model(n_estimators):
         X, y, test_size=0.3, random_state=42
         )
         # Inicializar y entrenar el modelo
-        model = RandomForestClassifier(n_estimators=200, random_state=42)
+        model = RandomForestClassifier(n_estimators, random_state=42)
         model.fit(X_train, y_train)
         # Realizar predicciones y calcular la precisión
         y_pred = model.predict(X_test)
@@ -46,9 +46,9 @@ def train_model(n_estimators):
         # Registrar el modelo con MLflow
         mlflow.sklearn.log_model(model, "random-forest-model")
         # Registrar parámetros y métricas
-        mlflow.log_param("n_estimators", 200)
+        mlflow.log_param("n_estimators", n_estimators)
         mlflow.log_metric("accuracy", accuracy)
-        print(f"Modelo entrenado y precisión: {accuracy:.4f}")
+        print(f"Modelo entrenado con n_estimators={n_estimators} y precisión: {accuracy:.4f}")
         print("Experimento registrado con MLflow.")
         
         # 1. Generar la matriz de confusión
