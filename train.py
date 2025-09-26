@@ -12,9 +12,9 @@ import seaborn as sns
 
 # Cargar el conjunto de datos desde el archivo CSV
 try:
-    iris = pd.read_csv('data/iris_dataset.csv')
+    iris = pd.read_csv('data/iris_dataset.csv.dvc')
 except FileNotFoundError:
-    print("Error: El archivo 'data/iris_dataset.csv' no fue encontrado.")
+    print("Error: El archivo 'data/iris_dataset.csv.dvc' no fue encontrado.")
 
 # Dividir el DataFrame en características (X) y etiquetas (y)
 X = iris.drop('target', axis=1)
