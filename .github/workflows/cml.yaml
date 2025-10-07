@@ -47,29 +47,26 @@ jobs:
         MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
       run: |
         dvc repro
-      
-    - name: Upload model artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: model-pkl
-        path: |
-          model.pkl
-          web/model.pkl
+        dvc push -r origin
   
   docker-build-and-push:
     needs: train-and-report
     runs-on: ubuntu-latest
     steps:
-    - name: Download model artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: model-pkl
-        path: .
+
     - name: Checkout Repository
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
   
+    - name: DVC pull model
+      env:
+        DAGSHUB_API_KEY: ${{ secrets.DAGSHUB_API_KEY }}
+      run: |
+        dvc remote modify origin --local access_key_id $DAGSHUB_API_KEY
+        dvc remote modify origin --local secret_access_key $DAGSHUB_API_KEY
+        dvc pull -r origin model.pkl.dvc
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
