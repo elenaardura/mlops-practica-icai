@@ -47,12 +47,24 @@ jobs:
         MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
       run: |
         dvc repro
-        cp model.pkl ../model.pkl
-
+      
+    - name: Upload model artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: model-pkl
+        path: |
+          model.pkl
+          web/model.pkl
+  
   docker-build-and-push:
     needs: train-and-report
     runs-on: ubuntu-latest
     steps:
+    - name: Download model artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: model-pkl
+        path: .
     - name: Checkout Repository
       uses: actions/checkout@v3
       with:
