@@ -49,6 +49,7 @@ jobs:
         dvc repro
   
   docker-build-and-push:
+    needs: train-and-report
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
