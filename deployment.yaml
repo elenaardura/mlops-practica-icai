@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: mlops-api
-        image: gcr.io/elenaardura/mlops-api:latest # <--- Reemplaza con la ruta de tu imagen
+        image: gcr.io/mlops-476106/mlops-api:latest # <--- Reemplaza con la ruta de tu imagen
         ports:
         - containerPort: 5000
